@@ -1,13 +1,21 @@
 package com.bitacademy.myportal.controllers;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitacademy.myportal.exception.CustomException;
+import com.bitacademy.myportal.repository.testCityVo;
+import com.bitacademy.myportal.service.UserService;
 
 @Controller
 public class MainController {
@@ -17,6 +25,26 @@ public class MainController {
 //		mav.setViewName("/WEB-INF/views/home.jsp");
 		mav.setViewName("home");	//	ViewResolver가 prefix와 suffix 조함 -> 완전한 ViewName 리턴
 		return mav;
+	}
+	@Autowired
+	private UserService userServiceImpl;
+	
+	@RequestMapping("/mysql")
+	@ResponseBody
+	@CrossOrigin(origins = "*", allowedHeaders = "*")  // cors 설정.. 없으면 안땅겨짐 
+	public Map<String, String> mysql() {
+		List<testCityVo> sql= userServiceImpl.mysql();
+//		System.out.println(sql);
+		Map<String, String> list = new HashMap<>();
+		int i=0;
+		
+			
+			list.put("city", sql.get(i).getCity());
+			list.put("cityId", String.valueOf(sql.get(i).getCityId()));
+			list.put("countryId", String.valueOf(sql.get(i).getCountryId()));
+	
+		
+		return list;
 	}
 	
 	//	예외 강제 발생 (테스트용)

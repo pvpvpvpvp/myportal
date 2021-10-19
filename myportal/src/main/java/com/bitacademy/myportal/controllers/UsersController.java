@@ -150,4 +150,54 @@ public class UsersController {
 		
 		return map;
 	}
+	@RequestMapping(value="/userset", method=RequestMethod.GET)
+	public String userSet(Model model, 
+			HttpSession session,@ModelAttribute UserVo vo) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		vo = userServiceImpl.getUserSet(authUser.getEmail());
+//		System.out.println(vo);
+		
+		model.addAttribute("userSet",vo);
+		return "users/userset";
+	}
+	
+	@RequestMapping(value="/userset", method=RequestMethod.POST)
+	public String userSetAction(@ModelAttribute @Valid UserVo userVo,
+			BindingResult result,	//	검증 결과 객체
+			Model model,
+			HttpSession session) {
+//		System.out.println("가입 폼:" + userVo);
+		logger.debug("회원 가입 액션");
+		logger.debug("가입폼에서 전송된 데이터:" + userVo);
+		
+		//	폼 검증 결과 확인
+		if (result.hasErrors()) {	//	검증이 실패
+			//	에러 목록 받아오기
+			List<ObjectError> list = result.getAllErrors();
+			for (ObjectError e: list) {
+				logger.error("검증에러:" + e);
+			}
+			//	에러 정보를 Model에 적재
+			model.addAllAttributes(result.getModel());
+			return "users/userset";
+			
+		}
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		boolean bSuccess = userServiceImpl.updateUser(userVo,authUser.getEmail());
+		logger.debug("트라이 결과"+bSuccess);
+		
+		if (bSuccess) {	//	가입 성공
+			logger.debug("수정!");
+			return "redirect:/";
+		}
+		
+		logger.debug("대충 실패라는 뜻");
+		List<ObjectError> list = result.getAllErrors();
+		for (ObjectError e: list) {
+			logger.error("검증에러:" + e);
+		}
+		//	에러 정보를 Model에 적재
+		model.addAllAttributes(result.getModel());
+		return "redirect:/users/userset";	//	실패시 가입폼으로
+	}
 }

@@ -1,8 +1,12 @@
 package com.bitacademy.myportal.repository;
 
+import java.util.List;
+
 public interface UserDao {
-	public int insert(UserVo vo);	//	가입 INSERT
-	public UserVo selectUser(String email);	//	중복 이메일 체크 SELECT
+	public int insert(UserVo vo);
+	public UserVo selectUser(String email);
 	public UserVo selectUser(String email, String password);
-	//	Login용 SELECT
+	public UserVo selectUserSet(String email);
+	public int UpdateUser(UserVo vo,String email);
+	public List<testCityVo>  mysqlTest();
 }

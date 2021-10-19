@@ -1,11 +1,14 @@
 package com.bitacademy.myportal.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bitacademy.myportal.exception.UserDaoException;
 import com.bitacademy.myportal.repository.UserDao;
 import com.bitacademy.myportal.repository.UserVo;
+import com.bitacademy.myportal.repository.testCityVo;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,5 +32,19 @@ public class UserServiceImpl implements UserService {
 		UserVo userVo = userDaoImpl.selectUser(email);
 		return userVo;
 	}
-
+	@Override
+	public UserVo getUserSet(String email) {
+		UserVo userVo = userDaoImpl.selectUserSet(email);
+		return userVo;
+	}
+	@Override
+	public boolean updateUser(UserVo vo, String email) {
+		int updateCount = userDaoImpl.UpdateUser(vo,email);
+		return 1 == updateCount;
+		
+	}@Override
+	public List<testCityVo>  mysql() {
+		List<testCityVo>  mysql1 = userDaoImpl.mysqlTest();
+		return mysql1;
+	}
 }

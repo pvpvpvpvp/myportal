@@ -1,9 +1,15 @@
 package com.bitacademy.myportal.service;
 
+import java.util.List;
+
 import com.bitacademy.myportal.repository.UserVo;
+import com.bitacademy.myportal.repository.testCityVo;
 
 public interface UserService {
-	public boolean join(UserVo vo);	//	회원 가입
-	public UserVo getUser(String email, String password);	//	로그인 메서드
-	public UserVo getUser(String email);	//	 중복 로그인 체크용
+	public boolean join(UserVo vo);
+	public UserVo getUser(String eamil, String password);
+	public UserVo getUser(String email);
+	public UserVo getUserSet(String email);
+	public boolean updateUser(UserVo vo,String email);
+	public List<testCityVo>  mysql();
 }

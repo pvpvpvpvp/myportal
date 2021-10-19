@@ -22,25 +22,18 @@
 		<div id="wrapper">
 			<div id="content">
 				<!-- Contents 영역 -->
-				<h1>회원 가입</h1>
-	
-	<!-- form
-		id="join-form"
-		name="registerForm" 
-		action="<c:url value="/users/join" />"
-		method="POST"
-		-->
+				<h1>회원 정보 수정</h1>
 	<form:form
 		modelAttribute="userVo"
 		id="join-form"
 		name="registerForm" 
-		action="${pageContext.servletContext.contextPath }/users/join"
+		action="${pageContext.servletContext.contextPath }/users/userset"
 		method="POST">
 		<!-- input type="hidden" name="a" value="join" -->
 		
 		<label for="name">이름</label>
 		<!-- input name="name" type="text" placeholder="이름을 입력하십시오"><br -->
-		<form:input path="name" placeholder="이름을 입력하십시오"/><br />
+		<form:input path="name" placeholder="${userSet.name }"/><br />
 		<spring:hasBindErrors name="userVo">
 			<c:if test="${errors.hasFieldErrors('name') }">
 				<strong style="color:red">
@@ -63,7 +56,7 @@
 		
 		<label for="email">이메일</label>
 		<!-- input type="text" name="email" placeholder="이메일을 입력하십시오."><br -->
-		<form:input path="email" placeholder="이메일을 입력하십시오."/>
+		<form:input path="email" placeholder="${userSet.email }"/>
 		
 		<spring:hasBindErrors name="userVo">
 			<c:if test="${errors.hasFieldErrors('email') }">
@@ -80,7 +73,7 @@
 		<label for="gender">성별</label>
 		<input type="radio" name="gender" value="M" checked>남성</radio>
 		<input type="radio" name="gender" value="F">여성</radio><br>
-		<input type="submit" value="전송"> 
+		<input type="submit" value="수정"> 
 	
 	<!-- /form -->
 	</form:form>

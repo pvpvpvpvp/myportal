@@ -1,6 +1,7 @@
 package com.bitacademy.myportal.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -32,6 +33,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserVo selectUser(String email) {
 		UserVo vo = sqlSession.selectOne("users.selectUserByEmail", email);
+		System.out.println("로드 테슽 select"+vo);
 		return vo;
 	}
 
@@ -45,5 +47,24 @@ public class UserDaoImpl implements UserDao {
 		UserVo vo = sqlSession.selectOne("users.selectUserByEmailAndPassword", userMap);
 		return vo;
 	}
-
+	@Override
+	public UserVo selectUserSet(String email) {
+		
+		
+		UserVo vo = sqlSession.selectOne("users.selectUserByEmail", email);
+		System.out.println("로드 테슽"+vo);
+		return vo;
+	}@Override
+	public int UpdateUser(UserVo vo,String email1) {
+		String originemail = vo.getEmail();
+		vo.setEmail(email1);
+		int count = sqlSession.update("users.updateUserSet", vo);
+		vo.setEmail(originemail);
+		int count2= sqlSession.update("users.updateUserEmail",vo);
+		return count;
+	}@Override
+	public List<testCityVo> mysqlTest() {
+	List<testCityVo> mysql= sqlSession.selectList("users.mysqlTest");
+		return mysql;
+	}
 }

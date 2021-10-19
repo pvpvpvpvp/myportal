@@ -10,6 +10,10 @@
 		<typeAlias alias="userVo" type="com.bitacademy.myportal.repository.UserVo" />
 		<typeAlias alias="boardVo"
 			type="com.bitacademy.myportal.repository.BoardVo" />
+		<typeAlias alias="testCityVo"
+			type="com.bitacademy.myportal.repository.testCityVo" />
+			     
+			
 	</typeAliases>
 	<!-- 매핑 설정 -->
 	<mappers>

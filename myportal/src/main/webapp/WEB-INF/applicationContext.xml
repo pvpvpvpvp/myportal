@@ -26,11 +26,25 @@
 		<qualifier value="main-db" />		
 	</bean>
 	
+	 <bean id="mysqlDataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/sakila?characterEncoding=UTF-8" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+
+		<property name="initialSize" value="0"/>
+		<property name="minIdle" value="0"/>
+		<property name="maxIdle" value="10"/>
+		<property name="maxTotal" value="10"/>
+		<property name="maxWaitMillis" value="1000"/>
+	</bean>
+	
 	<!--  MyBatis SqlSessionFactoryBean에 연결 -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 데이터 소스 연결 -->
-		<property name="dataSource" ref="oracleDatasource" />
+		<property name="dataSource" ref="mysqlDataSource" />
 		<property name="configLocation" value="classpath:mybatis/configuration.xml" />	
 	</bean>
 	

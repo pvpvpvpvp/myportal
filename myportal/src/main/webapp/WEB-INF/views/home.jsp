@@ -20,6 +20,7 @@
 			<div id="content">
 				<h1>My Portal</h1>
 				<p>Spring Framework로 만든 홈페이지입니다.</p>
+				<a href="/myportal/mysql">mysql test url</a>
 			</div>
 		</div>
 		<%@ include file="/WEB-INF/views/includes/footer.jsp" %>
