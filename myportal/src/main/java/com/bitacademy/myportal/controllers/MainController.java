@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,20 +31,31 @@ public class MainController {
 	
 	@RequestMapping("/mysql")
 	@ResponseBody
-	@CrossOrigin(origins = "*", allowedHeaders = "*")  // cors 설정.. 없으면 안땅겨짐 
-	public Map<String, String> mysql() {
-		List<testCityVo> sql= userServiceImpl.mysql();
+	@CrossOrigin(origins = "*", allowedHeaders = "*")  // cors 설정.. 없으면 안땅겨짐 (문제는 프론트에서 터지고 고치는건 백엔드에서 해야됨!)
+	public JSONObject mysql() {
+		
 //		System.out.println(sql);
-		Map<String, String> list = new HashMap<>();
-		int i=0;
-		
-			
-			list.put("city", sql.get(i).getCity());
-			list.put("cityId", String.valueOf(sql.get(i).getCityId()));
-			list.put("countryId", String.valueOf(sql.get(i).getCountryId()));
 	
+		Map<String, Map> map = new HashMap<>();
+		JSONObject jsonObject = new JSONObject();
+		for(int i=0;i<600;i++)
+		{
+			jsonObject.put("citys", list1(i));
+		}
 		
-		return list;
+		
+
+		return jsonObject;
+	}
+	JSONArray req_array = new JSONArray();
+	public JSONArray list1(int i){
+		List<testCityVo> sql= userServiceImpl.mysql();
+		Map<String, String> list = new HashMap<>();
+		list.put("city", sql.get(i).getCity());
+		list.put("cityId", String.valueOf(sql.get(i).getCityId()));
+		list.put("countryId", String.valueOf(sql.get(i).getCountryId()));
+		req_array.add(list);
+		return req_array;
 	}
 	
 	//	예외 강제 발생 (테스트용)
